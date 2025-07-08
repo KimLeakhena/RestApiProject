@@ -99,8 +99,6 @@ router.delete('/:dishId/comments/:commentId', verifyOrdinaryUser, async (req, re
 
         const comment = dish.comments.id(req.params.commentId);
         if (!comment) return res.status(404).json({ message: 'Comment not found' });
-
-        // 🔒 Only author can delete
         if (comment.author.toString() !== req.user.id) {
             return res.status(403).json({ message: 'You can only delete your own comment' });
         }
